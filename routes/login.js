@@ -21,6 +21,7 @@ router.post('/', function (req, res) {
         if (user) {
             var payload = {
                 id: user.id,
+                name: user.name
             };
 
             var token = jwt.sign(payload, cfg.jwtSecret, {expiresIn:"3h"});

@@ -20,6 +20,13 @@ module.exports = function () {
 
     let strategy = new passportJWT.Strategy(params, function (payload, done) {
 
+        return done(null, {
+            id: payload.id,
+            name: payload.name
+        });
+
+
+    /*
         let user = users.find(function (u) {
             return u.id === payload.id;
         });
@@ -33,9 +40,10 @@ module.exports = function () {
 
         } else {
 
-        return done(new Error('User not found'), null);
+            return done(new Error('User not found'), null);
 
         }
+    */
 
     });
 
