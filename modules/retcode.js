@@ -23,6 +23,13 @@ class returnCode {
             msg : `login failed.`
         }
     }
+
+    getFailedRegister() {
+        return {
+            code : 102,
+            msg : `register failed.`
+        }
+    }
 }
 
 module.exports = new returnCode; 

@@ -15,6 +15,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 retcode = require('./modules/retcode');
 account = require('./modules/account');
 config = require('./configs/config');
+users = require('./db/users'); 
 
 auth = require('./modules/auth')();
 app.use(auth.initialize());

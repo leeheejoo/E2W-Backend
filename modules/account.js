@@ -1,6 +1,5 @@
 'use strict';
 
-const users = require('../db/users'); 
 const jwt = require('jsonwebtoken');
 
 class account {
@@ -9,11 +8,9 @@ class account {
 
         if (email && password) {
 
-            let user = users.find(function (u) {
-                return u.email === email && u.password === password;    
-            });
+            let user = users.get(email);
     
-            if (user) {
+            if (user && user.password === password) {
 
                 let payload = {
                     id: user.id,
@@ -31,6 +28,20 @@ class account {
         } 
         
         return retcode.getFailedLogin(); 
+    }
+
+    register(email, password, secret) {
+
+        if (email && password && secret) {
+
+            if(users.register(email,password)){
+
+                let ret = retcode.getSuccess();
+                return ret;
+            }
+        }
+
+        return retcode.getFailedRegister();  
     }
 }
 

@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post('/', function (req, res) {
     
-    let ret = account.login(req.body.email, req.body.password);
+    let ret = account.register(req.body.email, req.body.password, req.body.secret);
     res.json(ret);
 
 });

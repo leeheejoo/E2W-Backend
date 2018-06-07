@@ -2,7 +2,6 @@
 
 const passport = require('passport');
 const passportJWT = require('passport-jwt');
-const users = require('../db/users');
 
 const params = {
     secretOrKey: config.jwtSecret,
