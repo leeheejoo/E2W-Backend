@@ -6,19 +6,19 @@ const jwt = require('jsonwebtoken');
 
 class account {
 
-    login(name, password) {
+    login(email, password) {
 
-        if (name && password) {
+        if (email && password) {
 
             let user = users.find(function (u) {
-                return u.name === name && u.password === password;    
+                return u.email === email && u.password === password;    
             });
     
             if (user) {
 
                 let payload = {
                     id: user.id,
-                    name: user.name
+                    email: user.email
                 };
     
                 let token = jwt.sign(payload, cfg.jwtSecret, {expiresIn:"30m"});

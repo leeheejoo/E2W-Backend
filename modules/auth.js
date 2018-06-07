@@ -20,7 +20,7 @@ module.exports = function () {
         let ret = retcode.getSuccess();
         ret['data'] = {
             id: payload.id,
-            name: payload.name
+            email: payload.email
         };
 
         return done(null, ret);
@@ -35,7 +35,7 @@ module.exports = function () {
 
             return done(null, {
                 id: user.id,
-                name: user.name
+                email: user.email
             });
 
         } else {
