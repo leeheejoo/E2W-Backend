@@ -1,6 +1,9 @@
 # E2W-Backend
 This is Ethereum and EOS Wallet Backend.
 
+설치: node 설치 and npm install
+실행:  
+
 1. 계정 생성 기능
   - todo
     - db로 계정 관리 - mongo db 사용 예정
