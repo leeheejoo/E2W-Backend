@@ -10,6 +10,7 @@ This is Ethereum and EOS Wallet Backend.
 - jwtSecret - jwt token을 암호화하기 위한 key
 - ethHttpProvider - 이더리움 노드(rpc) 주소
 
+API:
 1. 계정 생성 기능 
   - http post
   - /api/v1/register
