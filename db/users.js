@@ -1,5 +1,7 @@
 'use strict';
 
+var crypto = require("crypto-js");
+
 class users {
 
 	constructor() {
@@ -16,8 +18,19 @@ class users {
 		}];
 
 		this._count = 1;
-
 */
+	}
+
+	encrypt(data, secret) {
+		let encrypted = crypto.AES.encrypt(data,secret).toString();
+		//console.log(encrypted);
+		return encrypted;
+	}
+
+	decrypt(data, secret) {
+		let decyrpted  = crypto.AES.decrypt(data,secret);
+		//console.log(decyrpted.toString(crypto.enc.Utf8));
+		return decyrpted.toString(crypto.enc.Utf8);
 	}
 
 	register(email, password, secret) {
@@ -28,6 +41,10 @@ class users {
 
 		let address = eth.generateAddress(secret);
 		//console.log(address);
+		//console.log(address.privatekey);
+
+		let encryptedPrivateKey = this.encrypt(address.privatekey,secret);
+		//this.decrypt(encryptedPrivateKey,secret);
 
 		this._count++;
 
@@ -36,7 +53,7 @@ class users {
 			email:email,
 			password:password,
 			address:address.address,
-			privatekey:address.privatekey,
+			privatekey:encryptedPrivateKey,
 			publickey:address.publickey,
 		})
 
