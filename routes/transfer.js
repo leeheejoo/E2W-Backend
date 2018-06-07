@@ -24,7 +24,7 @@ router.post('/', auth.authenticate(), async function (req, res) {
         }
     }
     catch (error) {   
-        return res.json(retcode.getAbnormalConditionEthereumNode());
+        return res.json(retcode.getFailedTransfer());
     }
 
     return res.json(retcode.getWrongParameter());

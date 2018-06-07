@@ -53,6 +53,13 @@ class returnCode {
             msg : `ethereum node is abnormal condition.`
         }
     }
+
+    getFailedTransfer() {
+        return {
+            code : 202,
+            msg : `transfer failed to ethereum.`
+        }
+    }
 }
 
 module.exports = new returnCode; 
