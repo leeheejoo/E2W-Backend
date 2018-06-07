@@ -16,6 +16,8 @@ retcode = require('./modules/retcode');
 account = require('./modules/account');
 config = require('./configs/config');
 users = require('./db/users'); 
+eth = require('./modules/eth'); 
+eos = require('./modules/eos'); 
 
 auth = require('./modules/auth')();
 app.use(auth.initialize());

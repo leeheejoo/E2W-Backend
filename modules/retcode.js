@@ -30,6 +30,13 @@ class returnCode {
             msg : `register failed.`
         }
     }
+
+    getFailedRegisterByDuplicateEmail() {
+        return {
+            code : 103,
+            msg : `register failed because there is duplicated email.`
+        }
+    }
 }
 
 module.exports = new returnCode; 

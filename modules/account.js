@@ -34,11 +34,8 @@ class account {
 
         if (email && password && secret) {
 
-            if(users.register(email,password)){
-
-                let ret = retcode.getSuccess();
-                return ret;
-            }
+            let ret = users.register(email,password,secret);
+            return ret.retcode;
         }
 
         return retcode.getFailedRegister();  
