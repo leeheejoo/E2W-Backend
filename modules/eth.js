@@ -2,11 +2,12 @@
 
 const keythereum = require("keythereum");
 const ethereumUtil = require("ethereumjs-util");
+const web3 = require('web3');
 
 class eth {
 
     constructor() {
-
+        this._web3 = new web3(new web3.providers.HttpProvider(config.ethHttpProvider));
     }
 
     generateAddress(secret) {
@@ -47,6 +48,29 @@ class eth {
         }
 
         return ret;
+    }
+
+    async getBalance(email, unit) {
+
+        try{
+
+            let user = users.get(email);
+            
+            if(user){
+
+                let wei = await this._web3.eth.getBalance(user.address);
+    
+                if(unit === 'wei')
+                    return wei;
+    
+                return await this._web3.utils.fromWei(wei,'ether');
+            }
+        }
+        catch (error) {   
+            return undefined;
+        }
+
+        return undefined;
     }
 }
 

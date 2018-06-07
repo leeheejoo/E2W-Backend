@@ -5,20 +5,19 @@ var crypto = require("crypto-js");
 class users {
 
 	constructor() {
-		this._users = [];
-		this._count = 0;
-/*
+		//this._users = [];
+		//this._count = 0;
+
 		this._users = [{
 			id:1,
 			email:'test@mail.com',
 			password:'1111',
-			address:"0x22c8c1e6e2ae78c0ca456443f34b92fd17cbdcee",
-			privatekey:"0x27bb1c18c6d0d1a9adb3028f8f1e16a122489a9e76accf4973d37d0729b0fbd3",
-			publickey:"0xdcb52cac745488c1104960fb4f2a81f37ed84b0ac3d0863161a4a29397960e7fc134b229eade8273f7118b2d03fc7363b467f4e06d4fd38b1d962742a9285b30"
+			address:"0xb3f80ef64e78ce2283aea354553f7d5bc4dec983",
+			privatekey:"U2FsdGVkX19N+oT0pvud50E35xojz0zwjv2rsqaaKbIGe563nQuxrH4e/P52YyY6aanxwt4zSYbUuFSqTE0Md5MRB8hI/cN8P3v7d/Eig7B9f3MkSIb1w7N7HMZoNv6i",
+			publickey:"0x446459d5256cbd2767961e88ab3af47ea6b04c27f691949070feb2a3030b9f23b9fd693d29e748017473ba90c8452ab70d747655a557e3cc984a938ed682fc51"
 		}];
 
 		this._count = 1;
-*/
 	}
 
 	encrypt(data, secret) {

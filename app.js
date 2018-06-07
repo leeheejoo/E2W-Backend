@@ -25,12 +25,12 @@ app.use(auth.initialize());
 const indexRouter = require('./routes/index');
 const loginRouter = require('./routes/login');
 const registerRouter = require('./routes/register');
-const userRouter = require('./routes/user');
+const balanceRouter = require('./routes/balance');
 
 app.use('/', indexRouter);
 app.use(`${config.apiVersion}/login`, loginRouter);
 app.use(`${config.apiVersion}/register`, registerRouter);
-app.use(`${config.apiVersion}/user`, userRouter);
+app.use(`${config.apiVersion}/balance`, balanceRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

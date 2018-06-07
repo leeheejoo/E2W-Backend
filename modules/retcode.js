@@ -9,9 +9,16 @@ class returnCode {
         }
     }
 
-    getFailedAuthenticate() {
+    getWrongParameter() {
         return {
             code : 1,
+            msg : `parameter is wrong.`
+        }
+    }
+
+    getFailedAuthenticate() {
+        return {
+            code : 2,
             msg : `authenticate failed.`
         }
     }
@@ -35,6 +42,15 @@ class returnCode {
         return {
             code : 103,
             msg : `register failed because there is duplicated email.`
+        }
+    }
+
+    // ethereum 
+
+    getAbnormalConditionEthereumNode() {
+        return {
+            code : 201,
+            msg : `ethereum node is abnormal condition.`
         }
     }
 }
