@@ -26,11 +26,13 @@ const indexRouter = require('./routes/index');
 const loginRouter = require('./routes/login');
 const registerRouter = require('./routes/register');
 const balanceRouter = require('./routes/balance');
+const transferRouter = require('./routes/transfer');
 
 app.use('/', indexRouter);
 app.use(`${config.apiVersion}/login`, loginRouter);
 app.use(`${config.apiVersion}/register`, registerRouter);
 app.use(`${config.apiVersion}/balance`, balanceRouter);
+app.use(`${config.apiVersion}/transfer`, transferRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
