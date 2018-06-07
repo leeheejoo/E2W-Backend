@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
+
 app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -13,13 +14,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 auth = require('./modules/auth')();
 app.use(auth.initialize());
 
+retcode = require('./modules/retcode');
+account = require('./modules/account');
+
 const indexRouter = require('./routes/index');
 const loginRouter = require('./routes/login');
 const userRouter = require('./routes/user');
 
 app.use('/', indexRouter);
-app.use('/login', loginRouter);
-app.use('/user', userRouter);
+app.use('/api/v1/login', loginRouter);
+app.use('/api/v1/user', userRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

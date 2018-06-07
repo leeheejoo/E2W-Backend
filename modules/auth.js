@@ -8,22 +8,22 @@ const params = {
     jwtFromRequest: passportJWT.ExtractJwt.fromHeader("authorization")
 };
 
-app.get('/loginFailure', function(req, res, next) {
-    res.json({message:'Failed to authenticate'});
-});
-
-app.get('/loginSuccess', function(req, res, next) {
-    res.json({message:'Success to authenticate'});
+app.get('/api/v1/loginFailure', function(req, res, next) {
+    let ret = retcode.getFailedAuthenticate();
+    res.json(ret);
 });
 
 module.exports = function () {
 
     let strategy = new passportJWT.Strategy(params, function (payload, done) {
 
-        return done(null, {
+        let ret = retcode.getSuccess();
+        ret['data'] = {
             id: payload.id,
             name: payload.name
-        });
+        };
+
+        return done(null, ret);
 
 
     /*
@@ -56,8 +56,7 @@ module.exports = function () {
         authenticate: function () {
             return passport.authenticate('jwt', {  
                 session: false,
-                //successRedirect: '/loginSuccess',
-                failureRedirect: '/loginFailure'
+                failureRedirect: '/api/v1/loginFailure'
             });
         }
     };
