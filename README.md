@@ -23,7 +23,7 @@ API:
   - todo
     - db로 계정 관리 - mongo db 사용 예정
     
-2. 로그인 기능 - /api/v1//login
+2. 로그인 기능
   - http post
   - /api/v1/login
   - parameter
