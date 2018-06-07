@@ -1,14 +1,15 @@
+'use strict';
+
 const passport = require('passport');
 const passportJWT = require('passport-jwt');
 const users = require('../db/users');
-const cfg = require('../configs/jwt');
 
 const params = {
-    secretOrKey: cfg.jwtSecret,
+    secretOrKey: config.jwtSecret,
     jwtFromRequest: passportJWT.ExtractJwt.fromHeader("authorization")
 };
 
-app.get('/api/v1/loginFailure', function(req, res, next) {
+app.get(`${config.apiVersion}/loginFailure`, function(req, res, next) {
     let ret = retcode.getFailedAuthenticate();
     res.json(ret);
 });
@@ -56,7 +57,7 @@ module.exports = function () {
         authenticate: function () {
             return passport.authenticate('jwt', {  
                 session: false,
-                failureRedirect: '/api/v1/loginFailure'
+                failureRedirect: `${config.apiVersion}/loginFailure`
             });
         }
     };

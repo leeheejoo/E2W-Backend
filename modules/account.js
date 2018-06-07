@@ -1,7 +1,6 @@
 'use strict';
 
 const users = require('../db/users'); 
-const cfg = require('../configs/jwt');
 const jwt = require('jsonwebtoken');
 
 class account {
@@ -21,7 +20,7 @@ class account {
                     email: user.email
                 };
     
-                let token = jwt.sign(payload, cfg.jwtSecret, {expiresIn:"30m"});
+                let token = jwt.sign(payload, config.jwtSecret, {expiresIn:"30m"});
 
                 let ret = retcode.getSuccess();
                 ret['token'] = token;

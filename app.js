@@ -11,19 +11,23 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
-auth = require('./modules/auth')();
-app.use(auth.initialize());
 
 retcode = require('./modules/retcode');
 account = require('./modules/account');
+config = require('./configs/config');
+
+auth = require('./modules/auth')();
+app.use(auth.initialize());
 
 const indexRouter = require('./routes/index');
 const loginRouter = require('./routes/login');
+const registerRouter = require('./routes/register');
 const userRouter = require('./routes/user');
 
 app.use('/', indexRouter);
-app.use('/api/v1/login', loginRouter);
-app.use('/api/v1/user', userRouter);
+app.use(`${config.apiVersion}/login`, loginRouter);
+app.use(`${config.apiVersion}/register`, registerRouter);
+app.use(`${config.apiVersion}/user`, userRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
