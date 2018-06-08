@@ -1,23 +1,24 @@
 'use strict';
 
 var crypto = require("crypto-js");
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 class users {
 
 	constructor() {
-		//this._users = [];
-		//this._count = 0;
 
-		this._users = [{
-			id:1,
-			email:'test@mail.com',
-			password:'1111',
-			address:"0xb3f80ef64e78ce2283aea354553f7d5bc4dec983",
-			privatekey:"U2FsdGVkX19N+oT0pvud50E35xojz0zwjv2rsqaaKbIGe563nQuxrH4e/P52YyY6aanxwt4zSYbUuFSqTE0Md5MRB8hI/cN8P3v7d/Eig7B9f3MkSIb1w7N7HMZoNv6i",
-			publickey:"0x446459d5256cbd2767961e88ab3af47ea6b04c27f691949070feb2a3030b9f23b9fd693d29e748017473ba90c8452ab70d747655a557e3cc984a938ed682fc51"
-		}];
-
-		this._count = 1;
+		this._userSchem = new Schema({
+			id: Number,
+			email: String,
+			password: String,
+			address: String,
+			privatekey: String,
+			publickey: String,
+		});
+		
+		this._user = mongoose.model('user', this._userSchem );
+		this._count = 0;
 	}
 
 	encrypt(data, secret) {
@@ -32,9 +33,9 @@ class users {
 		return decyrpted.toString(crypto.enc.Utf8);
 	}
 
-	register(email, password, secret) {
+	async register(email, password, secret) {
 
-		if(this.get(email)){
+		if(await this.get(email)){
 			return { result : false, retcode : retcode.getFailedRegisterByDuplicateEmail() };
 		}
 
@@ -47,16 +48,16 @@ class users {
 
 		this._count++;
 
-		this._users.push({
-			id:this._count,
-			email:email,
-			password:password,
-			address:address.address,
-			privatekey:encryptedPrivateKey,
-			publickey:address.publickey,
-		})
+		let user = new this._user();
 
-		console.log(this._users);
+		user.id = this._count;
+		user.email = email;
+		user.password = password;
+		user.address = address.address;
+		user.privatekey = encryptedPrivateKey;
+		user.publickey = address.publickey;
+
+		await user.save();
 
 		return { result : true, retcode : retcode.getSuccess() };
 	}
@@ -65,12 +66,9 @@ class users {
 
 	}
 
-	get(email) {
+	async get(email) {
 
-		let user = this._users.find(function (u) {
-			return u.email === email;    
-		});
-
+		let user = await this._user.findOne({"email":email}).exec();
 		return user;
 	}
 }

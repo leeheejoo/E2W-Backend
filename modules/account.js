@@ -4,23 +4,28 @@ const jwt = require('jsonwebtoken');
 
 class account {
 
-    login(email, password) {
+    async login(email, password) {
 
         if (email && password) {
 
-            let user = users.get(email);
+            let user = await users.get(email);
     
             if (user && user.password === password) {
 
                 let payload = {
-                    id: user.id,
                     email: user.email
                 };
     
                 let token = jwt.sign(payload, config.jwtSecret, {expiresIn:"30m"});
+                let decoded = jwt.decode(token);
 
                 let ret = retcode.getSuccess();
-                ret['token'] = token;
+                ret['data'] = {
+                    'token' : token,
+                    'exp' : decoded.exp,
+                    'email' : email,
+                    'address' : user.address
+                }
     
                 return ret;
     
@@ -30,11 +35,11 @@ class account {
         return retcode.getFailedLogin(); 
     }
 
-    register(email, password, secret) {
+    async register(email, password, secret) {
 
         if (email && password && secret) {
 
-            let ret = users.register(email,password,secret);
+            let ret = await users.register(email,password,secret);
             return ret.retcode;
         }
 

@@ -55,7 +55,7 @@ class eth {
 
         try{
 
-            let user = users.get(email);
+            let user = await users.get(email);
             
             if(user){
 
@@ -78,7 +78,7 @@ class eth {
 
         try{
 
-            let user = users.get(email);
+            let user = await users.get(email);
             
             if(user){
 
@@ -123,7 +123,7 @@ class eth {
 
         try{
 
-            let user = users.get(email);
+            let user = await users.get(email);
             
             if(user){
 
@@ -154,6 +154,8 @@ class eth {
 
                             if (user.address == e.from.toLowerCase()|| user.address == e.to.toLowerCase()) {
 
+                                e.from = e.from.toLowerCase();
+                                e.to = e.to.toLowerCase();
                                 ts.push(e);
                                 tsCount++;
 

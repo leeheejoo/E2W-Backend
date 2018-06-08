@@ -21,6 +21,7 @@ eos = require('./modules/eos');
 
 auth = require('./modules/auth')();
 app.use(auth.initialize());
+mongo = require('./db/mongo')();
 
 const indexRouter = require('./routes/index');
 const loginRouter = require('./routes/login');

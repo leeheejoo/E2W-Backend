@@ -19,7 +19,6 @@ module.exports = function () {
 
         let ret = retcode.getSuccess();
         ret['data'] = {
-            id: payload.id,
             email: payload.email
         };
 

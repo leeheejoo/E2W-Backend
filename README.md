@@ -2,7 +2,7 @@
 
 This is Ethereum and EOS Wallet Backend.
 
-설치: node 설치 and npm install
+설치: node 설치 and npm install, 몽고 db 설치 필요
 
 실행: npm start
 
@@ -20,8 +20,6 @@ API:
       password:'',
       secret:''  -> privatkey를 암호화 하기위한 key
     }
-  - todo
-    - db로 계정 관리 - mongo db 사용 예정
     
 2. 로그인 기능
   - http post
