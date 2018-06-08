@@ -103,9 +103,10 @@ class eth {
 
                 let tx = new ethTx(rawTx);
                 tx.sign(ethereumUtil.toBuffer(privateKey)); 
+                console.log(ethereumUtil.bufferToHex(tx.from));
                 let serializedTx = tx.serialize();
 
-                this._web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex')).on('receipt', (res) => {
+                this._web3.eth.sendSignedTransaction(ethereumUtil.bufferToHex(serializedTx)).on('receipt', (res) => {
                     // callback after transaction write to block.
                     console.log(res);
                 }); 
@@ -116,6 +117,73 @@ class eth {
             throw error;
         }
 
+    }
+
+    async getTransactionHistory(email) {
+
+        try{
+
+            let user = users.get(email);
+            
+            if(user){
+
+                let blockCount = 100;
+                let endBlockNumber = await this._web3.eth.getBlockNumber();
+                let startBlockNumber = endBlockNumber - blockCount;
+
+                if(startBlockNumber < 1)
+                    startBlockNumber = 1;
+
+                let ts = [];
+                let tsCount = 1;
+
+                //console.log("Using endBlockNumber: " + endBlockNumber);
+                //console.log("Using startBlockNumber: " + startBlockNumber);
+                //console.log("Searching for transactions to/from address \"" + user.address + "\" within blocks "  + startBlockNumber + " and " + endBlockNumber);
+                
+                for (var i = endBlockNumber; i >= startBlockNumber; i--) {
+
+                    if(tsCount > 30)
+                        break;
+               
+                    var block = await this._web3.eth.getBlock(i, true);
+
+                    if (block != null && block.transactions != null) {
+
+                        block.transactions.forEach( function(e) {
+
+                            if (user.address == e.from.toLowerCase()|| user.address == e.to.toLowerCase()) {
+
+                                ts.push(e);
+                                tsCount++;
+
+                                /*
+                                console.log("  tx hash          : " + e.hash + "\n"
+                                    + "   nonce           : " + e.nonce + "\n"
+                                    + "   blockHash       : " + e.blockHash + "\n"
+                                    + "   blockNumber     : " + e.blockNumber + "\n"
+                                    + "   transactionIndex: " + e.transactionIndex + "\n"
+                                    + "   from            : " + e.from + "\n" 
+                                    + "   to              : " + e.to + "\n"
+                                    + "   value           : " + e.value + "\n"
+                                    + "   time            : " + block.timestamp + " " + new Date(block.timestamp * 1000).toGMTString() + "\n"
+                                    + "   gasPrice        : " + e.gasPrice + "\n"
+                                    + "   gas             : " + e.gas + "\n"
+                                    + "   input           : " + e.input);
+                                */
+                            }
+                        })
+                    }
+                }
+
+                return ts;
+            }
+        }
+        catch (error) {   
+            throw error;
+        }
+
+        return undefined;
     }
 }
 
