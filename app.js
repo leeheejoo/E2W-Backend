@@ -31,6 +31,8 @@ const addressRouter = require('./routes/eth/address');
 const balanceRouter = require('./routes/eth/balance');
 const transferRouter = require('./routes/eth/transfer');
 const transactionHistoryRouter = require('./routes/eth/transactionHistory');
+const erc20InfoRouter = require('./routes/eth/erc20/info');
+const erc20TransferRouter = require('./routes/eth/erc20/transfer');
 
 app.use('/', indexRouter);
 app.use(`${config.apiVersion}/login`, loginRouter);
@@ -40,6 +42,8 @@ app.use(`${config.apiVersion}/eth/address`, addressRouter);
 app.use(`${config.apiVersion}/eth/balance`, balanceRouter);
 app.use(`${config.apiVersion}/eth/transfer`, transferRouter);
 app.use(`${config.apiVersion}/eth/transactionHistory`, transactionHistoryRouter);
+app.use(`${config.apiVersion}/eth/erc20/info`, erc20InfoRouter);
+app.use(`${config.apiVersion}/eth/erc20/transfer`, erc20TransferRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

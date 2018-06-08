@@ -188,6 +188,30 @@ class eth {
 
         return undefined;
     }
+
+    async getErc20TokenInfo(email, erc20TokenAddress) {
+
+        try{
+
+        }
+        catch (error) {   
+            throw error;
+        }
+
+        return undefined;
+    }
+
+    async transferForErc20Token(email, erc20TokenAddress, to, value, gasLimit, gasPrice, secret) {
+
+        try{
+
+        }
+        catch (error) {   
+            throw error;
+        }
+
+        return undefined;
+    }
 }
 
 module.exports = new eth; 
