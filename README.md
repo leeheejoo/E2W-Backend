@@ -58,5 +58,11 @@ API:
   - todo
     - 보안을 위해 https 적용 해야함
 
+5. 거래 이력 조회 기능 ( 최근 30개 )
+  - http get
+  - /api/v1/eth/transactionHistory
+  - parameter
+    email=''
+
 
 추가 완료
