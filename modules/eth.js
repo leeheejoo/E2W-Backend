@@ -8,7 +8,7 @@ const ethTx = require('ethereumjs-tx');
 class eth {
 
     constructor() {
-        this._web3 = new web3(new web3.providers.HttpProvider(config.ethHttpProvider));
+        this._web3 = new web3(new web3.providers.HttpProvider(config.ethUrl));
     }
 
     generateAddress(secret) {

@@ -8,7 +8,8 @@ This is Ethereum and EOS Wallet Backend.
 
 설정: project folder/configs/config.js
 - jwtSecret - jwt token을 암호화하기 위한 key
-- ethHttpProvider - 이더리움 노드(rpc) 주소
+- ethUrl - 이더리움 노드(rpc) 주소
+- mongoUrl - 몽고 db 주소
 
 API:
 1. 계정 생성 기능 
