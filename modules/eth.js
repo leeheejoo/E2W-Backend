@@ -156,6 +156,7 @@ class eth {
 
                                 e.from = e.from.toLowerCase();
                                 e.to = e.to.toLowerCase();
+                                e.time = block.timestamp; 
                                 ts.push(e);
                                 tsCount++;
 
