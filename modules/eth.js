@@ -152,7 +152,7 @@ class eth {
 
                         block.transactions.forEach( function(e) {
 
-                            if (user.eth.address == e.from.toLowerCase()|| user.eth.address == e.to.toLowerCase()) {
+                            if ((e.from && user.eth.address == e.from.toLowerCase()) || (e.to && user.eth.address == e.to.toLowerCase())) {
 
                                 e.from = e.from.toLowerCase();
                                 e.to = e.to.toLowerCase();
