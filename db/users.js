@@ -12,13 +12,19 @@ class users {
 			id: Number,
 			email: String,
 			password: String,
-			address: String,
-			privatekey: String,
-			publickey: String,
+			eth : {
+				address: String,
+				privatekey: String,
+				publickey: String,
+			},
+			eos: {
+				address: String,
+				privatekey: String,
+				publickey: String,
+			}
 		});
 		
 		this._user = mongoose.model('user', this._userSchem );
-		this._count = 0;
 	}
 
 	encrypt(data, secret) {
@@ -39,23 +45,27 @@ class users {
 			return { result : false, retcode : retcode.getFailedRegisterByDuplicateEmail() };
 		}
 
-		let address = eth.generateAddress(secret);
+		// ethereum
+		let ethAddress = eth.generateAddress(secret);
+		let ethEncryptedPrivateKey = this.encrypt(ethAddress.privatekey,secret);
 		//console.log(address);
 		//console.log(address.privatekey);
-
-		let encryptedPrivateKey = this.encrypt(address.privatekey,secret);
 		//this.decrypt(encryptedPrivateKey,secret);
 
-		this._count++;
+		let lastUser = await this.getLast();
 
 		let user = new this._user();
 
-		user.id = this._count;
+		if(lastUser)
+			user.id = lastUser.id + 1;
+		else
+			user.id = 1;
+			
 		user.email = email;
 		user.password = password;
-		user.address = address.address;
-		user.privatekey = encryptedPrivateKey;
-		user.publickey = address.publickey;
+		user.eth.address = ethAddress.address;
+		user.eth.privatekey = ethEncryptedPrivateKey;
+		user.eth.publickey = ethAddress.publickey;
 
 		await user.save();
 
@@ -66,10 +76,24 @@ class users {
 
 	}
 
+	update(email) {
+
+	}
+
 	async get(email) {
 
 		let user = await this._user.findOne({"email":email}).exec();
 		return user;
+	}
+
+	async getLast() {
+
+		let users = await this._user.find().sort({$natural : -1}).limit(1);
+
+		if(users && users.length == 1)
+			return users[0];
+
+		return undefined;
 	}
 }
   

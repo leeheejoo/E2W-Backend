@@ -59,7 +59,7 @@ class eth {
             
             if(user){
 
-                let wei = await this._web3.eth.getBalance(user.address);
+                let wei = await this._web3.eth.getBalance(user.eth.address);
     
                 if(unit === 'wei')
                     return wei;
@@ -82,7 +82,7 @@ class eth {
             
             if(user){
 
-                let privateKey = users.decrypt(user.privatekey,secret);
+                let privateKey = users.decrypt(user.eth.privatekey,secret);
                 //console.log(privateKey);
                 let txValue = this._web3.utils.numberToHex(this._web3.utils.toWei(value.toString(), 'ether'));
                 let txData;
@@ -90,7 +90,7 @@ class eth {
                 if(data)
                     txData = this._web3.utils.asciiToHex(data); 
 
-                let nonce = await this._web3.eth.getTransactionCount(user.address);
+                let nonce = await this._web3.eth.getTransactionCount(user.eth.address);
 
                 let rawTx = {
                     nonce: this._web3.utils.numberToHex(nonce),                                  
@@ -139,7 +139,7 @@ class eth {
 
                 //console.log("Using endBlockNumber: " + endBlockNumber);
                 //console.log("Using startBlockNumber: " + startBlockNumber);
-                //console.log("Searching for transactions to/from address \"" + user.address + "\" within blocks "  + startBlockNumber + " and " + endBlockNumber);
+                //console.log("Searching for transactions to/from address \"" + user.eth.address + "\" within blocks "  + startBlockNumber + " and " + endBlockNumber);
                 
                 for (var i = endBlockNumber; i >= startBlockNumber; i--) {
 
@@ -152,7 +152,7 @@ class eth {
 
                         block.transactions.forEach( function(e) {
 
-                            if (user.address == e.from.toLowerCase()|| user.address == e.to.toLowerCase()) {
+                            if (user.eth.address == e.from.toLowerCase()|| user.eth.address == e.to.toLowerCase()) {
 
                                 e.from = e.from.toLowerCase();
                                 e.to = e.to.toLowerCase();

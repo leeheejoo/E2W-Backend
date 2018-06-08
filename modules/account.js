@@ -24,7 +24,7 @@ class account {
                     'token' : token,
                     'exp' : decoded.exp,
                     'email' : email,
-                    'address' : user.address
+                    'ethAddress' : user.eth.address
                 }
     
                 return ret;

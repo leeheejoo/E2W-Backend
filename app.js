@@ -27,6 +27,7 @@ const indexRouter = require('./routes/index');
 const loginRouter = require('./routes/login');
 const registerRouter = require('./routes/register');
 // ethereum
+const addressRouter = require('./routes/eth/address');
 const balanceRouter = require('./routes/eth/balance');
 const transferRouter = require('./routes/eth/transfer');
 const transactionHistoryRouter = require('./routes/eth/transactionHistory');
@@ -35,6 +36,7 @@ app.use('/', indexRouter);
 app.use(`${config.apiVersion}/login`, loginRouter);
 app.use(`${config.apiVersion}/register`, registerRouter);
 // ethereum
+app.use(`${config.apiVersion}/eth/address`, addressRouter);
 app.use(`${config.apiVersion}/eth/balance`, balanceRouter);
 app.use(`${config.apiVersion}/eth/transfer`, transferRouter);
 app.use(`${config.apiVersion}/eth/transactionHistory`, transactionHistoryRouter);
