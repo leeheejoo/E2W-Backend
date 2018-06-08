@@ -34,14 +34,14 @@ API:
   - todo
     - 보안을 위해 https 적용 해야함
     
-3. 밸런스 얻어오기 기능
+3. 밸런스 얻어오기 기능 (이더리움)
   - http get
   - /api/v1/eth/balance
   - parameter
     email=''
     unit='' -> default ether, unit='wei' wei로 보냄
     
-4. 계좌 이체 기능
+4. 계좌 이체 기능 (이더리움)
   - http post
   - /api/v1/eth/transfer
   - parameter
@@ -57,7 +57,7 @@ API:
   - todo
     - 보안을 위해 https 적용 해야함
 
-5. 거래 이력 조회 기능 ( 최근 30개 )
+5. 거래 이력 조회 기능 ( 최근 30개 )  (이더리움)
   - http get
   - /api/v1/eth/transactionHistory
   - parameter
