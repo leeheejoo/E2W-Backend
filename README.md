@@ -37,14 +37,14 @@ API:
     
 3. 밸런스 얻어오기 기능
   - http get
-  - /api/v1/balance
+  - /api/v1/eth/balance
   - parameter
     email=''
     unit='' -> default ether, unit='wei' wei로 보냄
     
 4. 계좌 이체 기능
   - http post
-  - /api/v1/transfer
+  - /api/v1/eth/transfer
   - parameter
     {
       email:'',
