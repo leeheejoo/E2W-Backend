@@ -16,7 +16,7 @@ API:
   - http post
   - /api/v1/register
   - parameter
-    {
+    - {
       email:'',
       password:'',
       secret:''  -> privatkey를 암호화 하기위한 key
@@ -26,7 +26,7 @@ API:
   - http post
   - /api/v1/login
   - parameter
-    {
+    - {
       email:'',
       password:''
     }
@@ -51,7 +51,7 @@ API:
   - http post
   - /api/v1/eth/transfer
   - parameter
-    {
+    - {
       email:'',
       to:'',
       value:'',    -> ether
