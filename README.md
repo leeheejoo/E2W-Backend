@@ -11,6 +11,8 @@ This is Ethereum and EOS Wallet Backend.
 - ethUrl - 이더리움 노드(rpc) 주소
 - mongoUrl - 몽고 db 주소
 
+erc20 token example : sols/MyToken.sol 참고
+
 API:
 1. 계정 생성 기능 
   - http post
@@ -96,5 +98,3 @@ API:
 추가 완료
 
 ToDo
-
-ERC20 Token 거래 기능
