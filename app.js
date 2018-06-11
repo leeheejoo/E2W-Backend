@@ -23,7 +23,6 @@ auth = require('./modules/auth')();
 app.use(auth.initialize());
 mongo = require('./db/mongo')();
 
-const indexRouter = require('./routes/index');
 const loginRouter = require('./routes/login');
 const registerRouter = require('./routes/register');
 // ethereum
@@ -34,7 +33,6 @@ const transactionHistoryRouter = require('./routes/eth/transactionHistory');
 const erc20InfoRouter = require('./routes/eth/erc20/info');
 const erc20TransferRouter = require('./routes/eth/erc20/transfer');
 
-app.use('/', indexRouter);
 app.use(`${config.apiVersion}/login`, loginRouter);
 app.use(`${config.apiVersion}/register`, registerRouter);
 // ethereum
