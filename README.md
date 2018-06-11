@@ -70,8 +70,16 @@ API:
     email=''
 
 
+7. ERC20 Token 정보 조회 (이더리움)
+  - http get
+  - /api/v1/eth/erc20/info
+  - parameter
+    email=''
+    erc20TokenAddress=''    ->  token contract address
+
 
 추가 완료
 
 ToDo
+
 ERC20 Token 거래 기능

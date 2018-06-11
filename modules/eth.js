@@ -4,7 +4,8 @@ const keythereum = require("keythereum");
 const ethereumUtil = require("ethereumjs-util");
 const web3 = require('web3');
 const ethTx = require('ethereumjs-tx');
-
+const contractABI = require('./erc20Abi');
+ 
 class eth {
 
     constructor() {
@@ -193,6 +194,30 @@ class eth {
 
         try{
 
+            let user = await users.get(email);
+            
+            if(user){
+
+                let tokenContract = await new this._web3.eth.Contract(contractABI,erc20TokenAddress,{
+                    from:user.eth.address
+                });
+                
+                let decimal = await tokenContract.methods.decimals().call();
+                let balance = await tokenContract.methods.balanceOf(user.eth.address).call();
+                let adjustedBalance = balance / Math.pow(10, decimal);
+                let tokenName = await tokenContract.methods.name().call();
+                let tokenSymbol = await tokenContract.methods.symbol().call();
+
+                let info = {
+                    'decimal': decimal,
+                    'balance': balance,
+                    'adjustedBalance': adjustedBalance,
+                    'name': tokenName,
+                    'symbol': tokenSymbol,
+                }
+
+                return info;
+            }
         }
         catch (error) {   
             throw error;
