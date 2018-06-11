@@ -77,6 +77,21 @@ API:
     - email=''
     - erc20TokenAddress=''    ->  token contract address
 
+8. ERC20 Token 이체 기능 (이더리움)
+  - http get
+  - /api/v1/eth/erc20/transfer
+  - parameter
+    - {
+      email:'',
+      erc20TokenAddress:'',
+      to:'',
+      value:'',    -> token
+      gasLimit:'',
+      gasPrice:'',
+      secret:''   -> privatkey를 암호화 하기위한 key
+    }
+  - todo
+    - 보안을 위해 https 적용 해야함
 
 추가 완료
 

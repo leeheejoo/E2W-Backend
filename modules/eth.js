@@ -104,13 +104,21 @@ class eth {
 
                 let tx = new ethTx(rawTx);
                 tx.sign(ethereumUtil.toBuffer(privateKey)); 
-                console.log(ethereumUtil.bufferToHex(tx.from));
+                //console.log(ethereumUtil.bufferToHex(tx.from));
                 let serializedTx = tx.serialize();
 
-                this._web3.eth.sendSignedTransaction(ethereumUtil.bufferToHex(serializedTx)).on('receipt', (res) => {
+                this._web3.eth.sendSignedTransaction(ethereumUtil.bufferToHex(serializedTx))
+                .on('receipt', (res) => {
                     // callback after transaction write to block.
                     console.log(res);
-                }); 
+                })
+                //.on('confirmation', function (confirmationNumber, receipt) {
+                    //console.log("confirmationNumber:" + confirmationNumber + " receipt:" + receipt);
+                //})
+                .on('error', (res) => {
+                    // callback after transaction write to block.
+                    console.log(res);
+                });  
   
             }
         }
@@ -199,7 +207,7 @@ class eth {
             if(user){
 
                 let tokenContract = await new this._web3.eth.Contract(contractABI,erc20TokenAddress,{
-                    from:user.eth.address
+                    form:user.eth.address
                 });
                 
                 let decimal = await tokenContract.methods.decimals().call();
@@ -230,12 +238,53 @@ class eth {
 
         try{
 
+            let user = await users.get(email);
+            
+            if(user){
+
+                let tokenContract = await new this._web3.eth.Contract(contractABI,erc20TokenAddress, {
+                    form:user.eth.address
+                });
+
+                let privateKey = users.decrypt(user.eth.privatekey,secret);
+                //console.log(privateKey);
+                let txValue = '0x0';
+                let txData = tokenContract.methods.transfer(to, value).encodeABI();
+                let nonce = await this._web3.eth.getTransactionCount(user.eth.address);
+
+                let rawTx = {
+                    from:user.eth.address,
+                    nonce: this._web3.utils.numberToHex(nonce),                                  
+                    gasPrice: this._web3.utils.numberToHex(gasPrice), 
+                    gasLimit: this._web3.utils.numberToHex(gasLimit),
+                    to: erc20TokenAddress,
+                    value: txValue,
+                    data: txData,
+                }
+
+                let tx = new ethTx(rawTx);
+                tx.sign(ethereumUtil.toBuffer(privateKey)); 
+                //console.log(ethereumUtil.bufferToHex(tx.from));
+                let serializedTx = tx.serialize();
+
+                this._web3.eth.sendSignedTransaction(ethereumUtil.bufferToHex(serializedTx))
+                .on('receipt', (res) => {
+                    // callback after transaction write to block.
+                    console.log(res);
+                })
+                //.on('confirmation', function (confirmationNumber, receipt) {
+                //    console.log("confirmationNumber:" + confirmationNumber + " receipt:" + receipt);
+                //})
+                .on('error', (res) => {
+                    // callback after transaction write to block.
+                    console.log(res);
+                });  
+
+            }
         }
         catch (error) {   
             throw error;
         }
-
-        return undefined;
     }
 }
 
