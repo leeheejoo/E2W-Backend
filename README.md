@@ -38,14 +38,14 @@ API:
   - http get
   - /api/v1/eth/balance
   - parameter
-    email=''
-    unit='' -> default ether, unit='wei' wei로 보냄
+    - email=''
+    - unit='' -> default ether, unit='wei' wei로 보냄
     
 4. 지갑 주소 얻어오기 기능 (이더리움)
   - http get
   - /api/v1/eth/address
   - parameter
-    email=''
+    - email=''
     
 5. 계좌 이체 기능 (이더리움)
   - http post
@@ -67,15 +67,15 @@ API:
   - http get
   - /api/v1/eth/transactionHistory
   - parameter
-    email=''
+    - email=''
 
 
 7. ERC20 Token 정보 조회 (이더리움)
   - http get
   - /api/v1/eth/erc20/info
   - parameter
-    email=''
-    erc20TokenAddress=''    ->  token contract address
+    - email=''
+    - erc20TokenAddress=''    ->  token contract address
 
 
 추가 완료
