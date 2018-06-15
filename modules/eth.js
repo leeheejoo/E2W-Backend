@@ -150,22 +150,25 @@ class eth {
                 //console.log("Using startBlockNumber: " + startBlockNumber);
                 //console.log("Searching for transactions to/from address \"" + user.eth.address + "\" within blocks "  + startBlockNumber + " and " + endBlockNumber);
                 
-                for (var i = endBlockNumber; i >= startBlockNumber; i--) {
+                for (let i = endBlockNumber; i >= startBlockNumber; i--) {
 
                     if(tsCount > 30)
                         break;
                
-                    var block = await this._web3.eth.getBlock(i, true);
+                    let block = await this._web3.eth.getBlock(i, true);
 
                     if (block != null && block.transactions != null) {
 
-                        block.transactions.forEach( function(e) {
+                        await block.transactions.forEach( async (e) => {
 
                             if ((e.from && user.eth.address == e.from.toLowerCase()) || (e.to && user.eth.address == e.to.toLowerCase())) {
 
                                 e.from = e.from.toLowerCase();
                                 e.to = e.to.toLowerCase();
-                                e.time = block.timestamp; 
+                                e.time = new Date(block.timestamp * 1000).toGMTString();
+                                e.fees = await this._web3.eth.estimateGas(e);
+                                e.fees = this._web3.utils.fromWei(e.fees.toString(),'ether');
+                                e.value = this._web3.utils.fromWei(e.value,'ether');
                                 ts.push(e);
                                 tsCount++;
 
