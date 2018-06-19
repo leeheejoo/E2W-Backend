@@ -108,9 +108,27 @@ class eth {
                 let serializedTx = tx.serialize();
 
                 this._web3.eth.sendSignedTransaction(ethereumUtil.bufferToHex(serializedTx))
-                .on('receipt', (res) => {
+                .on('receipt', async (res) => {
                     // callback after transaction write to block.
+
                     console.log(res);
+                    let client = wsClients.get(email);
+                    if(client) {
+
+                        let block = await this._web3.eth.getBlock(res.blockNumber);
+
+                        res.from = res.from.toLowerCase();
+                        res.to = res.to.toLowerCase();
+                        res.time = new Date(block.timestamp * 1000).toGMTString();
+                        res.fees = await this._web3.eth.estimateGas(res);
+                        res.fees = this._web3.utils.fromWei(res.fees.toString(),'ether');
+                        res.value = this._web3.utils.fromWei(txValue,'ether');
+
+                        client.send(JSON.stringify({
+                            type: 'ethTransferCommited',
+                            data :res
+                        }));
+                    }
                 })
                 //.on('confirmation', function (confirmationNumber, receipt) {
                     //console.log("confirmationNumber:" + confirmationNumber + " receipt:" + receipt);

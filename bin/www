@@ -88,3 +88,50 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+
+//web socket
+const WebSocketServer = require('websocket').server;
+
+wsClients = new Map();
+
+wsServer = new WebSocketServer({
+	httpServer: server,
+	autoAcceptConnections: false
+});
+
+wsServer.on('request', function(request) {
+
+	let connection = request.accept(undefined, request.origin);
+
+	console.log((new Date()) + ' WebSocket Connection accepted.');
+
+	connection.on('message',  function(message) {
+
+		if(message.type === 'utf8') {
+
+			let msgData = JSON.parse(message.utf8Data);
+			if(msgData.type === 'myEmail') {
+				wsClients.set(msgData.data.email, connection);
+			}
+		}
+
+		console.log(message);
+
+	});
+
+	connection.send(JSON.stringify({
+		type : 'getEmail',
+		data : {}
+	}));
+
+	connection.on('close', function(reasonCode, description) {
+		console.log((new Date()) + ' WebSocket Peer ' + connection.remoteAddress + ' disconnected.');
+		for (let key of wsClients.keys()) {
+			let client = wsClients.get(key);
+			if(client === connection)
+				wsClients.delete(key);
+		};
+	});
+
+});
