@@ -23,7 +23,7 @@ eos = require('./modules/eos');
 
 auth = require('./modules/auth')();
 app.use(auth.initialize());
-mongo = require('./db/mongo')();
+mongo = require('./db/mongo');
 
 const loginRouter = require('./routes/login');
 const registerRouter = require('./routes/register');
