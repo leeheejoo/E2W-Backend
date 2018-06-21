@@ -238,9 +238,10 @@ class eth {
                 let tokenSymbol = await tokenContract.methods.symbol().call();
 
                 let info = {
+                    'address': erc20TokenAddress,
                     'decimal': decimal,
                     'balance': balance,
-                    'adjustedBalance': adjustedBalance,
+                    'adjustedBalance': adjustedBalance.toFixed(Number(decimal)).toString(),
                     'name': tokenName,
                     'symbol': tokenSymbol,
                 }
