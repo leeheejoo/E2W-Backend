@@ -120,12 +120,14 @@ class eth {
                         res.from = res.from.toLowerCase();
                         res.to = res.to.toLowerCase();
                         res.time = new Date(block.timestamp * 1000).toGMTString();
-                        res.fees = await this._web3.eth.estimateGas(res);
+                        res.fees = res.cumulativeGasUsed * gasPrice;
                         res.fees = this._web3.utils.fromWei(res.fees.toString(),'ether');
                         res.value = this._web3.utils.fromWei(txValue,'ether');
+                        res.balance = await this.getBalance(email);
 
                         client.send(JSON.stringify({
                             type: 'ethTransferCommited',
+                            code:0,
                             data :res
                         }));
                     }
@@ -135,7 +137,18 @@ class eth {
                 //})
                 .on('error', (res) => {
                     // callback after transaction write to block.
-                    console.log(res);
+                    let client = wsClients.get(email);
+                    if(client) {
+
+                        console.log(res.message)
+
+                        client.send(JSON.stringify({
+                            type: 'ethTransferCommited',
+                            code: 1,
+                            data: res.message               
+                            }
+                        ));
+                    }
                 });  
   
             }
@@ -184,7 +197,8 @@ class eth {
                                 e.from = e.from.toLowerCase();
                                 e.to = e.to.toLowerCase();
                                 e.time = new Date(block.timestamp * 1000).toGMTString();
-                                e.fees = await this._web3.eth.estimateGas(e);
+                                let receipt = await this._web3.eth.getTransactionReceipt(e.hash);
+                                e.fees = receipt.cumulativeGasUsed * e.gasPrice;
                                 e.fees = this._web3.utils.fromWei(e.fees.toString(),'ether');
                                 e.value = this._web3.utils.fromWei(e.value,'ether');
                                 ts.push(e);
@@ -290,16 +304,46 @@ class eth {
                 let serializedTx = tx.serialize();
 
                 this._web3.eth.sendSignedTransaction(ethereumUtil.bufferToHex(serializedTx))
-                .on('receipt', (res) => {
+                .on('receipt', async (res) => {
                     // callback after transaction write to block.
-                    console.log(res);
+                    let client = wsClients.get(email);
+                    if(client) {
+
+                        let block = await this._web3.eth.getBlock(res.blockNumber);
+
+                        res.from = res.from.toLowerCase();
+                        res.to = res.to.toLowerCase();
+                        res.time = new Date(block.timestamp * 1000).toGMTString();
+                        res.fees = res.cumulativeGasUsed * gasPrice;
+                        res.fees = this._web3.utils.fromWei(res.fees.toString(),'ether');
+                        res.value = this._web3.utils.fromWei(txValue,'ether');
+                        res.balance = await tokenContract.methods.balanceOf(user.eth.address).call();
+
+                        client.send(JSON.stringify({
+                            type: 'ethTransferCommited',
+                            code: 0,
+                            data :res
+                        }));
+
+                    }
                 })
                 //.on('confirmation', function (confirmationNumber, receipt) {
                 //    console.log("confirmationNumber:" + confirmationNumber + " receipt:" + receipt);
                 //})
-                .on('error', (res) => {
+                .on('error', async (res) => {
                     // callback after transaction write to block.
-                    console.log(res);
+                    let client = wsClients.get(email);
+                    if(client) {
+
+                        console.log(res.message)
+
+                        client.send(JSON.stringify({
+                            type: 'ethTransferCommited',
+                            code: 1,
+                            data: res.message               
+                            }
+                        ));
+                    }
                 });  
 
             }
