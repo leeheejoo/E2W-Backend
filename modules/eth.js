@@ -140,7 +140,7 @@ class eth {
                     let client = wsClients.get(email);
                     if(client) {
 
-                        console.log(res.message)
+                        //console.log(res.message)
 
                         client.send(JSON.stringify({
                             type: 'ethTransferCommited',
